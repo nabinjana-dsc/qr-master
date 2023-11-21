@@ -1,0 +1,2 @@
+# qr-master
+All QRCode
