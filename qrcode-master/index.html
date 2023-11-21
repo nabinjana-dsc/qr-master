@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>QR-CODE GENERATOR </title>
+        <link href="src/style.css" media="all" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="src/jquery.js"></script>
+        <script type="text/javascript" src="src/jquery.scrollTo.js"></script>
+        <script type="text/javascript" src="src/jquery.nav.min.js"></script>
+        <script type="text/javascript" src="src/qrcode.js"></script>
+        <script>
+            var QrBuild;
+
+            function build_qrcode(type) {
+                var image_div_id = type + '_div';
+                $('#' + image_div_id).html('');
+
+                switch(type) {
+                    case 'text':
+                        QrBuild.text("text_div", $('#text-content').val());
+                        break;
+                    case 'link':
+                        QrBuild.text("link_div", $('#link-content').val());
+                        break;
+                    case 'sms':
+                        QrBuild.sms("sms_div", $('#sms-no').val(), $('#sms-content').val());
+                        break;
+                    case 'phone-number':
+                        QrBuild.phone_number("phone-number_div", $('#phone-content').val());
+                        break;
+                    case 'contact-info':
+                        QrBuild.contact_info("contact-info_div", $('#contact-name').val(), $('#contact-addr').val(), $('#contact-tel').val(), $('#contact-email').val());
+                        break;
+                    case 'email':
+                        QrBuild.email("email_div", $('#email-to').val(), $('#email-subject').val(), $('#email-content').val());
+                        break;
+                    case 'wifi':
+                        QrBuild.wifi("wifi_div", $('#wifi-type').val(), $('#wifi-ssid').val(), $('#wifi-pwd').val());
+                        break;
+                };
+            };
+
+            $(document).ready(function() {
+                $('#nav').onePageNav({ filter: ':not(.external)', scrollThreshold: 0.25 });
+                QrBuild = new qrcode({
+                  size: 200, 
+                  ec_level: "L", //  L -  7% M -  15% Q - 25% H - 30%
+                  margin: 1
+                });
+                $('.build_button').click();
+            });
+        </script>
+    </head>
+
+    <body>
+        <ul id="nav">
+            <li><a href="http://nabin.tech" target="_blank"  class="external" style="padding:0px;"> <img src="image/qr-code-concept.avif" width="100px" /></a></li>
+            <li class="current"><a href="#section-text">TEXT</a></li>
+            <li><a href="#section-link">URL</a></li>
+            <li><a href="#section-sms">SMS</a></li>
+            <li><a href="#section-phone-number">PHONE NO.</a></li>
+            <li><a href="#section-contact-info">CONTACT-INFO</a></li>
+            <li><a href="#section-email">Email</a></li>
+            <li><a href="#section-wifi">Wifi</a></li>
+        </ul>
+
+        <div id="container">
+            <div class="section" id="section-text">
+                <h1>Text</h1>
+                <div id="text_div" class="image"></div>
+                <div class="form">
+                    <p class="textarea">
+                        <label>Text Content:</label>
+                        <textarea id="text-content">Hello World!!!</textarea>
+                    </p>
+                    <input type="button" value="Generate QR-CODE" onclick="build_qrcode('text')" class="build_button"/>
+                </div>
+            </div>
+
+            <div class="section" id="section-link">
+                <h1>URL</h1>
+                <div id="link_div" class="image"></div>
+                <div class="form">
+                    <p>
+                        <label>URL:</label>
+                        <input type="text" id="link-content" value="http://www.nabin.tech" />
+                    </p>
+                    <input type="button" value="Generate QR-CODE" onclick="build_qrcode('link')" class="build_button" />
+                </div>
+            </div>
+
+            <div class="section" id="section-sms">
+                <h1>SMS</h1>
+                <div id="sms_div" class="image"></div>
+                <div class="form">
+                    <p>
+                        <label>Phone No:</label>
+                        <input type="text" id="sms-no" value="10086" />
+                    </p>
+                    <p>
+                        <label>URL:</label>
+                        <input type="text" id="sms-content" value="1234567890" />
+                    </p>
+                    <input type="button" value="Generate QR-CODE" onclick="build_qrcode('sms')" class="build_button" />
+                </div>
+            </div>
+
+            <div class="section" id="section-phone-number">
+                <h1>Telephone Number</h1>
+                <div id="phone-number_div" class="image"></div>
+                <div class="form">
+                    <p>
+                        <label>Telephone number:</label>
+                        <input type="text" id="phone-content" value="10086" />
+                    </p>
+                    <input type="button" value="Generate QR-CODE" onclick="build_qrcode('phone-number')" class="build_button" />
+                </div>
+            </div>
+
+            <div class="section" id="section-contact-info">
+                <h1>Contact Info</h1>
+                <div id="contact-info_div" class="image"></div>
+                <div class="form">
+                    <p>
+                        <label>Name:</label>
+                        <input type="text" id="contact-name" value="Nabin Jana" />
+                    </p>
+                    <p>
+                        <label>Address:</label>
+                        <input type="text" id="contact-addr" value="10086" />
+                    </p>
+                    <p>
+                        <label>Phone:</label>
+                        <input type="text" id="contact-tel" value="10086" />
+                    </p>
+                    <p>
+                        <label>Email:</label>
+                        <input type="text" id="contact-email" value="10086@gmail.com" />
+                    </p>
+                    <input type="button" value="Generate QR-CODE" onclick="build_qrcode('contact-info')" class="build_button" />
+                </div>
+            </div>
+
+            <div class="section" id="section-email">
+                <h1>EMAIL</h1>
+                <div id="email_div" class="image"></div>
+                <div class="form">
+                    <p>
+                        <label>Email TO:</label>
+                        <input type="text" id="email-to" value="10086@139.com" />
+                    </p>
+                    <p>
+                        <label>Subject:</label>
+                        <input type="text" id="email-subject" value="Subject" />
+                    </p>
+                    <p class="textarea">
+                        <label>Body:</label>
+                        <textarea id="email-content">Body</textarea>
+                    </p>
+                    <input type="button" value="Generate QR-CODE" onclick="build_qrcode('email')" class="build_button" />
+                </div>
+            </div>
+
+            <div class="section" id="section-wifi">
+                <h1>Wifi</h1>
+                <div id="wifi_div" class="image"></div>
+                <div class="form">
+                    <p>
+                        <label>SSID:</label>
+                        <input type="text" id="wifi-ssid" value="10086" />
+                    </p>
+                    <p>
+                        <label>Password:</label>
+                        <input type="text" id="wifi-pwd" value="10086" />
+                    </p>
+                    <p>
+                        <label>Security:</label>
+                        <select id="wifi-type">
+                            <option value="WPA/WPA2" selected="">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="">null</option>
+                        </select>
+                    </p>
+                    <input type="button" value="Generate QR-CODE" onclick="build_qrcode('wifi')" class="build_button" />
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
